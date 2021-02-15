@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <TITLE>Match Strings</TITLE>
+    <style>
+        input[type=text] {
+            width: 50%;
+            margin: 8px 0;
+            box-sizing: border-box;
+            background-color: #3CBC8D;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            position: relative;
+            left: 10%;
+        }
+
+        input[type=button] {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+            text-align: center;
+            position: absolute;
+            left: 30%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Match Strings by Usama</h2>
+    Main Text : <input id="txtMainText" type="text" /> <br>
+    Sub Text : &nbsp;&nbsp;<input id="txtSubText" type="text" /><br>
+
+    <script>
+
+        function MatchStrings(mainText, subText) {
+            var res = [];
+
+            if (mainText && subText) {
+                var mainTextSize = mainText.length;
+                var subTextSize = subText.length;
+
+                var subTextCurrentIndex = 0;
+                var mainTextCurrentIndex = 0;
+
+                // loop until reached the end of the mainText
+                while (mainTextCurrentIndex < mainTextSize) {
+                    if (ChangeCase(mainText[mainTextCurrentIndex], subText[subTextCurrentIndex])) {
+                        subTextCurrentIndex++;
+                        mainTextCurrentIndex++;
+
+                        if (subTextCurrentIndex === subTextSize) {
+                            res.push((mainTextCurrentIndex - subTextSize) + 1);
+                            // reset subText Index for next possible match
+                            subTextCurrentIndex = 0;
+                        }
+                    }
+                    else if (subTextCurrentIndex > 0) {
+                        subTextCurrentIndex = 0;
+                    }
+                    else {
+                        mainTextCurrentIndex++;
+                    }
+                }
+            }
+            else {
+                alert ("Please Enter String Values to Match");
+            }
+            return res;
+        }
+
+        function ChangeCase(a, b) {
+            return a.toUpperCase() === b.toUpperCase();
+        }
+
+    </script>
+
+    Result : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="txtResultIndex" type="text" /><br><br>
+    <input id="BtnSubmit" onclick="document.getElementById('txtResultIndex').value = MatchStrings(document.getElementById('txtMainText').value, document.getElementById('txtSubText').value)" type="button" value="Submit" />
+
+</body>
+
+</html>
